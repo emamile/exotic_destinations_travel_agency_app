@@ -1,13 +1,13 @@
 import hashlib
-from sqlalchemy.exc import IntegrityError
+
 from pydantic import EmailStr
+
 from app.database.db import SessionLocal
+from app.users.exceptions import UserInvalidPasswordException
 from app.users.repository import UserRepository
-from app.users.exceptions import UserInvalidPasswordException, UserNotFoundException
 
 
 class UserService:
-
     @staticmethod
     def create_user(email: EmailStr, password: str):
         with SessionLocal() as db:

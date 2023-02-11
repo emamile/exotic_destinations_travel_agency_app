@@ -1,5 +1,6 @@
-from fastapi import Request, HTTPException
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import HTTPException, Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+
 from app.users.services import decode_jwt
 
 
@@ -17,8 +18,9 @@ class JWTBearer(HTTPBearer):
             if not payload.get("valid"):
                 raise HTTPException(status_code=403, detail="Invalid token or expired token.")
             if payload.get("role") != self.role:
-                raise HTTPException(status_code=403,
-                                    detail="User with provided role is not permitted to access this route.")
+                raise HTTPException(
+                    status_code=403, detail="User with provided role is not permitted to access this route."
+                )
             return credentials.credentials
         else:
             raise HTTPException(status_code=403, detail="Invalid authorization code.")
@@ -27,7 +29,7 @@ class JWTBearer(HTTPBearer):
         is_token_valid: bool = False
         try:
             payload = decode_jwt(jwtoken)
-        except:
+        except Exception:
             payload = None
         if payload:
             is_token_valid = True

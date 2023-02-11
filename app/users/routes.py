@@ -2,9 +2,8 @@ from fastapi import APIRouter, Depends
 from pydantic import EmailStr
 
 from app.users.controller import UserController
-from app.users.schemas.user_schema import UserSchema, UserSchemaIn
 from app.users.controller.user_auth_handler_controller import JWTBearer
-
+from app.users.schemas.user_schema import UserSchema, UserSchemaIn
 
 user_router = APIRouter(tags=["USERS"], prefix="/api/users")
 
@@ -47,5 +46,3 @@ def update_user(user_id: str, email: EmailStr, password: str):
 @user_router.delete("/delete-user-by-id")
 def delete_user_by_id(user_id: str):
     return UserController.delete_user_by_id(user_id)
-
-

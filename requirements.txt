@@ -11,3 +11,4 @@ starlette~=0.22.0
 PyJWT==2.6.0
 python-decouple==3.7
 bcrypt
+pre-commit

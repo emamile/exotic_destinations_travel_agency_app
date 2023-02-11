@@ -1,11 +1,11 @@
+from pydantic import EmailStr
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+
 from app.users.models import User
-from pydantic import EmailStr
 
 
 class UserRepository:
-
     def __init__(self, database: Session):
         self.database = database
 
@@ -63,4 +63,3 @@ class UserRepository:
             return True
         except Exception as e:
             raise e
-

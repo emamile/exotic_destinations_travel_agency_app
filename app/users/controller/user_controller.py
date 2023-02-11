@@ -1,12 +1,12 @@
+from fastapi import HTTPException, Response
 from pydantic import EmailStr
 from sqlalchemy.exc import IntegrityError
+
+from app.users.exceptions import UserAlreadyExistsException, UserInvalidPasswordException, UserNotFoundException
 from app.users.services import UserService, sign_jwt
-from fastapi import HTTPException, Response
-from app.users.exceptions import UserInvalidPasswordException, UserAlreadyExistsException, UserNotFoundException
 
 
 class UserController:
-
     @staticmethod
     def create_user(email: EmailStr, password: str):
         try:
@@ -66,10 +66,13 @@ class UserController:
                 try:
                     userr = UserService.get_user_by_email(email=email)
                     if userr is None:
-                        return UserService.update_user_email_and_password(user_id=user_id, email=email,
-                                                                          password=password)
+                        return UserService.update_user_email_and_password(
+                            user_id=user_id, email=email, password=password
+                        )
                     else:
-                        raise UserAlreadyExistsException(message=f"User with provided email {email} already exists.", code=400)
+                        raise UserAlreadyExistsException(
+                            message=f"User with provided email {email} already exists.", code=400
+                        )
                 except UserAlreadyExistsException as e:
                     raise HTTPException(status_code=e.code, detail=e.message)
             else:

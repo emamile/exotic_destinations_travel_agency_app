@@ -1,4 +1,4 @@
-from pydantic import BaseModel, UUID4, EmailStr
+from pydantic import UUID4, BaseModel, EmailStr
 
 
 class TravelAgencySchema(BaseModel):
