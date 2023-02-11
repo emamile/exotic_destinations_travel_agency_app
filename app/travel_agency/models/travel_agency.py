@@ -1,5 +1,6 @@
-from sqlalchemy import Column, String
 from uuid import uuid4
+
+from sqlalchemy import Column, String
 
 from app.database import Base
 
@@ -19,5 +20,3 @@ class TravelAgency(Base):
         self.password = password
         self.address = address
         self.telephone_number = telephone_number
-
-
