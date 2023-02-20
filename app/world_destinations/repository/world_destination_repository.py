@@ -28,9 +28,9 @@ class WorldDestinationRepository:
         )
         return world_destination
 
-    def get_world_destination_by_acronym(self, acronym: str):
-        world_destination = self.database.query(WorldDestination).filter(WorldDestination.name.ilike(f"%{acronym}%")).all()
-        return world_destination
+    def get_world_destinations_by_acronym(self, acronym: str):
+        world_destinations = self.database.query(WorldDestination).filter(WorldDestination.name.ilike(f"%{acronym}%")).all()
+        return world_destinations
 
     def delete_world_destination_by_id(self, world_destination_id: str):
         try:

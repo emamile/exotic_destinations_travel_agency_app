@@ -9,8 +9,8 @@ from app.database.db import Base
 class State(Base):
     __tablename__ = "states"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
-    name = Column(String(50), unique=True)
-    basic_info = Column(String(1000))
+    name = Column(String(50), unique=True, nullable=False)
+    basic_info = Column(String(1000), nullable=False)
 
     world_destination_id = Column(String(50), ForeignKey("world_destinations.id"))
     world_destination = relationship("WorldDestination", lazy="subquery")

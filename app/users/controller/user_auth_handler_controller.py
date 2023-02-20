@@ -28,9 +28,10 @@ class JWTBearer(HTTPBearer):
     def verify_jwt(self, jwtoken: str) -> dict:
         is_token_valid: bool = False
         try:
-            payload = decode_jwt(jwtoken)
-        except Exception:
+            payload = decodeJWT(jwtoken)
+        except:
             payload = None
         if payload:
             is_token_valid = True
-        return {"valid": is_token_valid, "role": payload["role"]}
+            return {"valid": is_token_valid, "role": payload["role"]}
+        return {"valid": is_token_valid}

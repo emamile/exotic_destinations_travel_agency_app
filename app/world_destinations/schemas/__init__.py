@@ -1,2 +1,3 @@
 from .state_schema import StateSchema, StateSchemaIn, StateSchemaUpdate
 from .world_destination_schema import WorldDestinationSchema, WorldDestinationSchemaIn
+from .useful_info_about_state_schema import UsefulInfoAboutStateSchema, UsefulInfoAboutStateSchemaIn
