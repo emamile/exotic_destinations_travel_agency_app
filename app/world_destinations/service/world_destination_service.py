@@ -1,56 +1,68 @@
+from sqlalchemy.exc import IntegrityError
+
 from app.database.db import SessionLocal
+from app.world_destinations.exceptions import WorldDestinationNotFoundException, WorldDestinationAlreadyExistsException
 from app.world_destinations.repository import WorldDestinationRepository
 
 
 class WorldDestinationService:
     @staticmethod
     def create_world_destination(name: str):
-        with SessionLocal() as db:
-            try:
+        try:
+            with SessionLocal() as db:
                 world_destination_repository = WorldDestinationRepository(db)
                 return world_destination_repository.create_world_destination(name=name)
-            except Exception as e:
-                raise e
+        except IntegrityError:
+            raise WorldDestinationAlreadyExistsException(code=400, message=f"World destination with name {name} already exists.")
 
     @staticmethod
     def get_all_world_destinations():
-        with SessionLocal() as db:
-            try:
+        try:
+            with SessionLocal() as db:
                 world_destination_repository = WorldDestinationRepository(db)
                 return world_destination_repository.get_all_world_destinations()
-            except Exception as e:
-                raise e
+        except Exception as e:
+            raise e
 
     @staticmethod
     def get_world_destination_by_id(world_destination_id: str):
-        with SessionLocal() as db:
-            try:
+        try:
+            with SessionLocal() as db:
                 world_destination_repository = WorldDestinationRepository(db)
-                return world_destination_repository.get_world_destination_by_id(
+                world_destination = world_destination_repository.get_world_destination_by_id(
                     world_destination_id=world_destination_id
                 )
-            except Exception as e:
-                raise e
+                if world_destination is None:
+                    raise WorldDestinationNotFoundException(code=400,
+                                                            message=f"World destination with provided ID {world_destination_id} does not exist.")
+                return world_destination
+        except Exception as e:
+            raise e
 
     @staticmethod
-    def get_world_destination_by_acronym(acronym: str):
-        with SessionLocal() as db:
-            try:
+    def get_world_destinations_by_acronym(acronym: str):
+        try:
+            with SessionLocal() as db:
                 world_destination_repository = WorldDestinationRepository(db)
-                return world_destination_repository.get_world_destination_by_acronym(acronym=acronym)
-            except Exception as e:
-                raise e
+                world_destinations = world_destination_repository.get_world_destinations_by_acronym(acronym=acronym)
+                if world_destinations:
+                    return world_destinations
+                raise WorldDestinationNotFoundException(
+                    code=400, message=f"World destinations with acronym {acronym} do not exist."
+                )
+        except Exception as e:
+            raise e
 
     @staticmethod
     def delete_world_destination_by_id(world_destination_id: str):
-        with SessionLocal() as db:
-            try:
+        try:
+            with SessionLocal() as db:
                 world_destination_repository = WorldDestinationRepository(db)
                 if world_destination_repository.delete_world_destination_by_id(
                     world_destination_id=world_destination_id
                 ):
                     return True
-                else:
-                    return False
-            except Exception as e:
-                raise e
+                raise WorldDestinationNotFoundException(
+                    code=400, message=f"World destination with provided ID {world_destination_id} does not exist.")
+        except Exception as e:
+            raise e

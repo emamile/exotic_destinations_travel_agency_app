@@ -30,18 +30,27 @@ class UserRepository:
             raise e
 
     def get_all_users(self):
-        users = self.database.query(User).all()
-        return users
+        try:
+            users = self.database.query(User).all()
+            return users
+        except Exception as e:
+            raise e
 
     def get_user_by_id(self, user_id: str):
-        user = self.database.query(User).filter(User.id == user_id).first()
-        return user
+        try:
+            user = self.database.query(User).filter(User.id == user_id).first()
+            return user
+        except Exception as e:
+            raise e
 
     def get_user_by_email(self, email: EmailStr):
-        user = self.database.query(User).filter(User.email == email).first()
-        return user
+        try:
+            user = self.database.query(User).filter(User.email == email).first()
+            return user
+        except Exception as e:
+            raise e
 
-    def update_user_email_and_password(self, user_id: str, email: EmailStr, password: str):
+    def update_users_email_and_password(self, user_id: str, email: EmailStr, password: str):
         try:
             user = self.database.query(User).filter(User.id == user_id).first()
             user.email = email

@@ -8,9 +8,9 @@ from app.database.db import Base
 class User(Base):
     __tablename__ = "users"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
-    email = Column(String(100), unique=True)
-    password = Column(String(100))
-    is_superuser = Column(Boolean, default=False)
+    email = Column(String(100), unique=True, nullable=False)
+    password = Column(String(100), nullable=False)
+    is_superuser = Column(Boolean, default=False, nullable=False)
 
     def __init__(self, email: str, password: str, is_superuser=False):
         self.email = email

@@ -17,3 +17,12 @@ class UserSchemaIn(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserSchemaUpdate(BaseModel):
+    id: str
+    password: str
+
+    class Config:
+        orm_mode = True
+
