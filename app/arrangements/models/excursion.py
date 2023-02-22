@@ -1,9 +1,11 @@
 from uuid import uuid4
 
-from sqlalchemy import Column, String, UniqueConstraint, Float
+from sqlalchemy import Column, Float, String, UniqueConstraint
+
 from app.database.db import Base
 
 
+# > The Excursion class is a subclass of the Base class
 class Excursion(Base):
     __tablename__ = "excursions"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
@@ -17,4 +19,3 @@ class Excursion(Base):
         self.name = name
         self.price = price
         self.description = description
-

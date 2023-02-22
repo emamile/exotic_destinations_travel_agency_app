@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship
 from app.database.db import Base
 
 
+# > A BookedArrangement is a booking of a specific arrangement for a specific date
 class BookedArrangement(Base):
-
     __tablename__ = "travelers_booked_arrangements"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
 
@@ -20,4 +20,3 @@ class BookedArrangement(Base):
     def __init__(self, arrangement_id: str, traveler_id: str):
         self.arrangement_id = arrangement_id
         self.traveler_id = traveler_id
-
