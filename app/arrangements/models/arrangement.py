@@ -1,11 +1,13 @@
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import Column, ForeignKey, String, DATE, Integer, Float, Boolean
+from sqlalchemy import DATE, Boolean, Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
 from app.database.db import Base
 
 
+# > The Arrangement class is a subclass of the Base class
 class Arrangement(Base):
     __tablename__ = "arrangements"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
@@ -18,17 +20,29 @@ class Arrangement(Base):
     air_route_to_the_destination = Column(String(1000), nullable=False)
     price = Column(Float, nullable=False)
     demandingness = Column(Integer, nullable=False)
-    availability = Column(Boolean, default=True)
+    availability = Column(Boolean, default=True, nullable=False)
     included_in_price = Column(String(1000), nullable=False)
     not_included_in_price = Column(String(1000), nullable=False)
 
     state_id = Column(String(50), ForeignKey("states.id"))
     state = relationship("State", lazy="subquery")
 
-    def __init__(self, name: str, code: str, date_of_departure: str, date_of_arrival: str,
-                 duration: int, description: str, air_route_to_the_destination: str,
-                 price: float, demandingness: int, availability: bool, included_in_price: str,
-                 not_included_in_price: str, state_id: str):
+    def __init__(
+        self,
+        name: str,
+        code: str,
+        date_of_departure: str,
+        date_of_arrival: str,
+        duration: int,
+        description: str,
+        air_route_to_the_destination: str,
+        price: float,
+        demandingness: int,
+        availability: bool,
+        included_in_price: str,
+        not_included_in_price: str,
+        state_id: str,
+    ):
         self.name = name
         self.code = code
         self.date_of_departure = datetime.strptime(date_of_departure, "%Y-%m-%d")

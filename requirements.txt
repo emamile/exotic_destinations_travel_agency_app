@@ -12,3 +12,6 @@ PyJWT==2.6.0
 python-decouple==3.7
 bcrypt
 pre-commit
+fastapi-mail
+pytest
+coverage

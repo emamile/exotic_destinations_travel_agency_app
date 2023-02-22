@@ -1,4 +1,3 @@
+from .state_info_repository import StateInfoRepository
 from .state_repository import StateRepository
 from .world_destination_repository import WorldDestinationRepository
-from .useful_info_about_state_repository import UsefulInfoAboutStateRepository
-

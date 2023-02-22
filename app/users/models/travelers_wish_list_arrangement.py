@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 from app.database.db import Base
 
 
+# This class is a table that stores the wish list of arrangements for a user.
 class WishListForArrangements(Base):
-
     __tablename__ = "travelers_wish_list"
 
     arrangement_id = Column(String(50), ForeignKey("arrangements.id"), primary_key=True)

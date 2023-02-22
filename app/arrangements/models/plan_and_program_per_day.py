@@ -2,9 +2,11 @@ from uuid import uuid4
 
 from sqlalchemy import Column, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import relationship
+
 from app.database.db import Base
 
 
+# > This class is used to store the plan and program for each day of the week
 class PlanAndProgramPerDay(Base):
     __tablename__ = "plan_and_program_per_day"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
@@ -24,8 +26,9 @@ class PlanAndProgramPerDay(Base):
 
     __table_args__ = (UniqueConstraint("title", "arrangement_id", name="p_and_p_uc"),)
 
-    def __init__(self, title: str, location: str, description: str, food: str, excursion_id: str,
-                 accommodation_id: str, arrangement_id: str):
+    def __init__(
+        self, title: str, location: str, description: str, food: str, excursion_id: str, accommodation_id: str, arrangement_id: str
+    ):
         self.title = title
         self.location = location
         self.description = description
@@ -33,4 +36,3 @@ class PlanAndProgramPerDay(Base):
         self.excursion_id = excursion_id
         self.accommodation_id = accommodation_id
         self.arrangement_id = arrangement_id
-
