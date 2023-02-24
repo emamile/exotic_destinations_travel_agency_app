@@ -13,12 +13,12 @@ class PlanAndProgramPerDay(Base):
     title = Column(String(100), nullable=False)
     location = Column(String(100), nullable=False)
     description = Column(String(1000), nullable=False)
-    food = Column(String(500), nullable=False)
+    food = Column(String(500), nullable=True)
 
-    excursion_id = Column(String(50), ForeignKey("excursions.id"))
+    excursion_id = Column(String(50), ForeignKey("excursions.id"), nullable=True)
     excursion = relationship("Excursion", lazy="subquery")
 
-    accommodation_id = Column(String(50), ForeignKey("accommodations.id"))
+    accommodation_id = Column(String(50), ForeignKey("accommodations.id"), nullable=True)
     accommodation = relationship("Accommodation", lazy="subquery")
 
     arrangement_id = Column(String(50), ForeignKey("arrangements.id"))
